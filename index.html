@@ -6,169 +6,129 @@
   <title>Responsive Navbar Pure CSS</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-	
-    body { font-family: Arial, sans-serif; }
-
+    /* RESET */
+    * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+    }
     
-	
-	/* sticky */
-	
-	.navbar {
-	    display: flex;
-	    align-items: center;
-	    justify-content: space-between;
-	    background: #eee;
-	    border-bottom: 1px solid darkgray;
-	    padding: 10px 20px;
+    body { 
+        font-family: Arial, sans-serif; 
+    }
 
-	    /* --- Perubahan untuk membuatnya sticky --- */
-	    position: sticky;
-	    top: 0; 
-	    /* -------------------------------------- */
-    
-	    z-index: 100;
-	    flex-wrap: wrap;
-	    height: 55px;
-
-	    /* Opsional: Tambahkan lebar 100% untuk memastikan menutupi seluruh lebar layar */
-	    width: 100%;
-	}
+    /* === NAVBAR UTAMA (Desktop & Base) === */
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #eee;
+        border-bottom: 1px solid darkgray;
+        padding: 10px 20px;
+        
+        position: sticky;
+        top: 0; 
+        z-index: 100;
+        
+        /* DESKTOP: Tetap nowrap agar sebaris */
+        flex-wrap: nowrap; 
+        height: auto; 
+        width: 100%;
+    }
 
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
       color: #8A1111;
+      flex-shrink: 0; 
     }
 
-    .search { flex: 1; margin: 0 15px; }
+    .search { 
+        /* DESKTOP: Batasi pertumbuhan agar nav-links punya ruang */
+        flex-grow: 1; 
+        max-width: 400px; 
+        margin: 0 15px; 
+        flex-shrink: 1; 
+    }
     .search input {
-		background-color:#eee;
+      background-color:#eee;
       width: 100%;
       padding: 2px 12px;
       border: 1px solid #8A1111;
       border-radius: 6px;
-	  outline: none;
+      outline: none;
     }
 
     .nav-links {
       display: flex;
       gap: 15px;
-	  padding: 0 15px;
-      transition: max-height 0.4s ease, padding 0.3s ease; 
+      padding: 0 0px;
+      transition: none; 
+      flex-shrink: 0; 
+      flex-grow: 0;
     }
-	
-	.nav-links a:hover {
-		color:#8A1111;
-		font-size:16px;
-		
-		/* background-color: #eee; */
-		
-		
-	}
+  
+    .nav-links a:hover {
+      color:#8A1111;
+      font-size:16px;
+    }
+    
     .nav-links a {
       text-decoration: none;
       color: #333;
       font-weight: 500;
-      /* padding: 8px 15px; */
-	  
-	  
     }
 
-    /* ===== SHARE ICON (Pure CSS) ===== */
+    /* SHARE ICON (Tetap) */
     .share-btn {
       width: 23px;
       height: 23px;
       cursor: pointer;
-      order: 3;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-	  margin-left:10px;
+      margin-left:10px;
+      flex-shrink: 0; 
     }
-
-    /* titik kiri tengah */
-    .share-btn::before {
+    .share-btn::before, .share-btn::after, .share-btn span {
       content: "";
       position: absolute;
       width: 7px;
       height: 7px;
-      background: #8A1111; /* #333 - dot kiri */
+      background: #8A1111;
       border-radius: 50%;
-      left: 2px;
-      top: 50%;
-      transform: translateY(-50%);
     }
+    .share-btn::before { left: 2px; top: 50%; transform: translateY(-50%); }
+    .share-btn::after { right: 0; top: 0.5px; }
+    .share-btn span { right: 0; bottom: 0.5px; }
 
-    /* titik atas kanan */
-    .share-btn::after {
-      content: "";
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      background: #8A1111; /* #333 */
-      border-radius: 50%;
-      right: 0;
-      top: 0.5px;
-    }
-
-    /* titik bawah kanan */
-    .share-btn span {
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      background: #8A1111;/* #333*/
-      border-radius: 50%;
-      right: 0;
-      bottom: 0.5px;
-    }
-
-    /* === Versi diagonal (lama) === */
-    .share-btn .line-top {
+    .share-btn .line-top, .share-btn .line-bottom {
       position: absolute;
       width: 14px;
       height: 2px;
-      background: #8A1111; /* #333*/
-      top: 11px;
-      left: 6px;
-      transform: rotate(-25deg); /* UPDATE: sudut miring */
+      background: #8A1111;
       transform-origin: left center;
     }
-    .share-btn .line-bottom {
-      position: absolute;
-      width: 14px;
-      height: 2px;
-      background: #8A1111; /* #333*/
-      bottom: 11px;
-      left: 6px;
-      transform: rotate(25deg);  /* UPDATE: sudut miring */
-      transform-origin: left center;
-    }
+    .share-btn .line-top { top: 11px; left: 6px; transform: rotate(-30deg); }
+    .share-btn .line-bottom { bottom: 11px; left: 6px; transform: rotate(30deg); }
 
-    /* === Versi lurus (opsional) === */
-    .share-btn .line-top.straight { /* UPDATE: opsi baru */
-      transform: rotate(-30deg); /* garis lurus ke pojok kanan atas */
-    }
-    .share-btn .line-bottom.straight { /* UPDATE: opsi baru */
-      transform: rotate(30deg);  /* garis lurus ke pojok kanan bawah */
-    }
 
-    /* ===== HAMBURGER ===== */
+    /* HAMBURGER (Tersembunyi di Desktop) */
     .hamburger {
       display: none;
-      width: 22px; /* UPDATE: kecilkan ukuran hamburger */
+      width: 22px; 
       height: 18px;
       position: relative;
       cursor: pointer;
       margin-left: 10px;
-	  
+      flex-shrink: 0;
     }
     .hamburger span {
       position: absolute;
       height: 3px;
       width: 100%;
-      background: #8A1111; /*#333*/
+      background: #8A1111; 
       border-radius: 3px;
       left: 0;
       transition: 0.3s;
@@ -176,216 +136,150 @@
     .hamburger span:nth-child(1) { top: 0; }
     .hamburger span:nth-child(2) { top: 7px; }
     .hamburger span:nth-child(3) { bottom: 0; }
-
-    #menu-toggle:checked + .hamburger span:nth-child(1) {
-      transform: rotate(45deg);
-      top: 7.5px;
-    }
-    #menu-toggle:checked + .hamburger span:nth-child(2) {
-      opacity: 0;
-    }
-    #menu-toggle:checked + .hamburger span:nth-child(3) {
-      transform: rotate(-45deg);
-      bottom: 7.5px;
-    }
-	
-	
-	
-	/* blok main*/
-	/* blok HERO section*/
-	
-	.section-1 {
-	  background-color: #111827;
-	}
-	
-	.hero-1 {
-		  /* container mx-auto */
-		  width: 100%;
-		  margin-left: auto;
-		  margin-right: auto;
-		  /* max-width: 1280px;  Opsional: Tiru perilaku 'container' Tailwind (bervariasi di breakpoint) */
-
-		  /* text-center */
-		  text-align: center;
-
-		  /* text-white */
-		  color: #ffffff;
-
-		  /* h-screen */
-		  height: 80vh;
-
-		  /* flex */
-		  display: flex;
-
-		  /* items-center */
-		  align-items: center;
-
-		  /* Tambahan: Untuk menengahkan konten secara horizontal dalam mode flex, yang sangat umum dengan items-center */
-		  justify-content: center;
-		}
-		
-		.hero-2 {
-		  /* mx-auto */
-		  margin-left: auto;
-		  margin-right: auto;
-
-		  /* w-2/4 */
-		  width: 90%;
-		}
-		
-		.hero-3 {
-		  /* text-5xl */
-		  font-size: 2rem;   /* Setara dengan 48px jika default font-size adalah 16px */
-		  line-height: 1;    /* Default line-height untuk text-5xl di Tailwind */
-
-		  /* font-bold */
-		  font-weight: 700;  /* Tebal/Bold */
-
-		  /* text-center */
-		  text-align: center;
-		  
-	    /* mb-5 */
-	    margin-bottom: 1.25rem; /* Setara dengan 20px (5 * 0.25rem) */
-		  
-		}
-		
-		.hero-4 {
-		  /* text-gray-500 */
-		  color: #6b7280;
-
-		  /* mb-5 */
-		  margin-bottom: 3.25rem; /* Setara dengan 20px (5 * 0.25rem) */
-
-		  /* mx-auto */
-		  margin-left: auto;
-		  margin-right: auto;
-		}
-	
-	
-	
-	.hero-cta {
-	  /* bg-red-500 */
-	  background-color: #ef4444;
-	  
-
-	  /* text-white */
-	  color: #ffffff;
-
-	  /* py-2 */
-	  padding-top: 0.5rem;
-	  padding-bottom: 0.5rem;
-
-	  /* px-5 - BAGIAN YANG DIKOREKSI */
-	  padding-left: 1.25rem; /* Nilai yang benar untuk px-5 */
-	  padding-right: 1.25rem; /* Nilai yang benar untuk px-5 */
-
-	  /* rounded-xl */
-	  border-radius: 0.75rem;
-
-	  /* Transisi: Opsional, tapi disarankan untuk efek hover yang halus */
-	  transition: background-color 0.3s ease;
-	}
-	
-	.hero-cta:hover {
-		/* hover:bg-red-800 */
-		  background-color: #991b1b;
-	}
-	
-	/* section 2*/
-	.section-2 {
-	  /* bg-gray-200 */
-	  background-color: #e5e7eb;
-
-	  /* py-20 */
-	  padding-top: 5rem;
-	  padding-bottom: 5rem;
-	}
-	
-	.services-2 {
-	  /* container */
-	  width: 100%;
-	  max-width: 1280px; /* Nilai max-width bervariasi tergantung konfigurasi Tailwind, 1280px adalah contoh umum untuk breakpoint besar. */
-
-	  /* mx-auto */
-	  margin-left: auto;
-	  margin-right: auto;
-	}
-	
-	.services-2-h3 {
-	  /* text-5xl */
-	  font-size: 3rem;   /* Ukuran teks sangat besar, setara 48px */
-	  line-height: 1;    /* Mengatur jarak antar baris */
-
-	  /* font-bold */
-	  font-weight: 700;  /* Ketebalan font tebal/bold */
-
-	  /* text-center */
-	  text-align: center; /* Menengahkan teks */
-
-	  /* mb-5 */
-	  margin-bottom: 1.25rem; /* Margin bawah, setara 20px */
-	}
-	
-	.services-2-p {
-	  /* text-gray-500 */
-	  color: #6b7280;
-
-	  /* text-center */
-	  text-align: center;
-
-	  /* mb-5 */
-	  margin-bottom: 1.25rem; /* Setara dengan 20px (5 * 0.25rem) */
-	}
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 768px) {
-      .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 60%;
-        right: 0;
-        background: #fff;
-        flex-direction: column;
-        gap: 0;
-        overflow: hidden;
-        max-height: 0;
-        border-top: 0px solid #eee;
-        order: 4;
-        flex-wrap: nowrap;
-        padding: 0;
-		
-      }
-	  
-	  .nav-links a:hover {
-		border-left: 3px solid #8A1111;
-		
-	  }
-	  
-      .nav-links a {
-		  color:#333;
-        padding: 10px 20px;
-        border-bottom: 1px solid #f0f0f0;
-		
-		
-      }
-      .nav-links a:last-child {
-        border-bottom: 1px solid #f0f0f0;
-        
-      }
-      #menu-toggle:checked ~ .nav-links {
-        max-height: 400px;
-		
-		
-      }
-      .hamburger { display: block; order: 3; }
-      .share-btn { order: 2; margin-right: 10px; }
-    }
-
+    #menu-toggle:checked + .hamburger span:nth-child(1) { transform: rotate(45deg); top: 7.5px; }
+    #menu-toggle:checked + .hamburger span:nth-child(2) { opacity: 0; }
+    #menu-toggle:checked + .hamburger span:nth-child(3) { transform: rotate(-45deg); bottom: 7.5px; }
     #menu-toggle { display: none; }
-	
-		
-		
-	
+  
+    /* === MOBILE MEDIA QUERY (max-width: 768px) === */
+    @media (max-width: 768px) {
+        
+        /* FIX UTAMA: Hapus flex-wrap di mobile agar semua elemen PUSH sebaris */
+        .navbar {
+            flex-wrap: nowrap; 
+            align-items: center; 
+            padding: 10px 20px; /* Padding kembali seperti semula */
+        }
+
+        /* Navlinks kini TIDAK LAGI menggunakan ORDER, karena harus disembunyikan */
+        .nav-links {
+            /* Pindahkan .nav-links di luar Flexbox utama agar bisa sebaris */
+            position: absolute; 
+            top: 100%; /* Mulai tepat di bawah navbar */
+            left: 60%; 
+            background: #fff;
+            flex-direction: column;
+            padding: 0 15px;
+            gap: 0;
+            overflow: hidden;
+            max-height: 0;
+            width: 100%;
+            transition: max-height 0.4s ease, border-top 0.3s ease; 
+        }
+
+        /* Order elemen di Baris Utama (Satu Baris) */
+        .logo { 
+            order: 1; 
+            margin-right: 15px; /* Tambahkan sedikit jarak dari search */
+        } 
+        
+        .search {
+            /* PENTING: Beri search ruang untuk tumbuh, tapi batasi MAX width-nya */
+            order: 2; 
+            flex-grow: 1; 
+            flex-shrink: 1;
+            margin: 0; /* Hapus margin horizontal */
+            max-width: 60%; /* Batasi agar tombol menu muat di kanan */
+        }
+
+        .search input {
+            padding: 2px 12px; 
+        }
+        
+        .share-btn { 
+            order: 3; 
+            margin-left: 15px; /* PENTING: Dorong ke kanan dan buat jarak dengan hamburger */
+            margin-right: 10px; 
+        }
+        
+        .hamburger { 
+            display: block; 
+            order: 4; /* Di paling kanan */
+            margin-left: 10px; /* Jarak yang ditambahkan */
+        }
+        
+        
+
+
+        /* Tampilan Navlink saat dibuka */
+        #menu-toggle:checked ~ .nav-links {
+            max-height: 400px; 
+            border-top: 1px solid #eee; 
+            /* Saat dibuka, tetap absolute, agar konten di bawah tidak melompat */
+        }
+    
+        .nav-links a {
+            padding: 10px 0px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .nav-links a:hover {
+            /* border-left: 3px solid #8A1111; */
+            font-size: 17px;
+            color: #8A1111;
+        }
+    }
+  
+    
+    
+  /* blok main*/
+  /* blok HERO section (Styling sisa konten tetap) */
+  .section-1 { background-color: #111827; }
+  .hero-1 {
+      width: 100%;
+      margin-left: auto; margin-right: auto;
+      text-align: center;
+      color: #ffffff;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-2 { margin-left: auto; margin-right: auto; width: 90%; }
+    .hero-3 {
+      font-size: 2rem; 
+      line-height: 1; 
+      font-weight: 700; 
+      text-align: center;
+      margin-bottom: 1.25rem; 
+    }
+    .hero-4 {
+      color: #6b7280;
+      margin-bottom: 3.25rem; 
+      margin-left: auto; margin-right: auto;
+    }
+  
+  
+  
+  .hero-cta {
+    background-color: #ef4444;
+    color: #ffffff;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1.25rem; 
+    padding-right: 1.25rem; 
+    border-radius: 0.75rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .hero-cta:hover { background-color: #991b1b; }
+  
+  /* section 2*/
+  .section-2 { background-color: #e5e7eb; padding-top: 5rem; padding-bottom: 5rem; }
+  .services-2 { width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto; }
+  .services-2-h3 {
+    font-size: 3rem; 
+    line-height: 1; 
+    font-weight: 700; 
+    text-align: center; 
+    margin-bottom: 1.25rem; 
+  }
+  .services-2-p {
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 1.25rem; 
+  }
+  
   </style>
 </head>
 <body>
@@ -405,45 +299,39 @@
 
     <div class="nav-links">
       <a href="#">Beranda</a>
-      <a href="#">Tentang Kami</a>
-	  <a href="#">Layanan</a>
-	  <a href="#">Tanya Jawab</a>
-	  <a href="#">Testimoni</a>
-	  <a href="#">Tips Sehat</a>
-	  
-	  <a href="#">Alamat</a>
-	  <a href="#">Reservasi</a>
+      <a href="#">Profil</a>
+      <a href="#">Layanan</a>
+      <a href="#">Tanya Jawab</a>
+      <a href="#">Testimoni</a>
+      <a href="#">Tips</a>
+      <a href="#">Alamat</a>
+      <a href="#">Reservasi</a>
       <a href="#">Kontak</a>
     </div>
 
-    <!-- Share Button -->
     <a href="#" class="share-btn" aria-label="Share">
       <span></span>
-      <!-- pilih salah satu: diagonal (default) atau lurus (tambah class "straight") -->
-      <div class="line-top straight"></div>   <!-- UPDATE: bisa tambah "straight" -->
-      <div class="line-bottom straight"></div> <!-- UPDATE: bisa tambah "straight" -->
+      <div class="line-top"></div>
+      <div class="line-bottom"></div>
     </a>
   </nav>
   
-  <!-- Hero section -->
   <section class="section-1">
-  	<div class="hero-1">
-		<div class="hero-2">
-			<h3 class="hero-3">FASHDU</h3>
-			<h3 class="hero-3">Sehatkan Tubuhmu!</h3>
-			
-			<p class="hero-4">Setiap kali darah "kotor" dikeluarkan, maka tubuh akan mereproduksi sel darah baru yang lebih sehat dan sempurna</p>
-			<a href="" class="hero-cta">See All Portofolio</a>
-		</div>
-	</div>
+    <div class="hero-1">
+      <div class="hero-2">
+        <h3 class="hero-3">FASHDU</h3>
+        <h3 class="hero-3">Sehatkan Tubuhmu!</h3>
+        <p class="hero-4">Setiap kali darah "kotor" dikeluarkan, maka tubuh akan mereproduksi sel darah baru yang lebih sehat dan sempurna</p>
+        <a href="" class="hero-cta">See All Portofolio</a>
+      </div>
+    </div>
   </section>
   
-  <!-- Services -->
   <section id="services" class="section-2">
-  	<div class="services-2">
-  		<h3 class="services-2-h3">Our Services</h3>
-		<p class="services-2-p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, exercitationem.</p>
-  	</div>
+    <div class="services-2">
+      <h3 class="services-2-h3">Our Services</h3>
+      <p class="services-2-p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, exercitationem.</p>
+    </div>
   </section>
 </body>
-</html
+</html>
